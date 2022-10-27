@@ -1,6 +1,8 @@
 
-import javafx.util.Pair;
 
+import jdk.internal.net.http.common.Pair;
+
+import javax.swing.*;
 import java.io.IOException;
 
 import java.net.*;
@@ -13,10 +15,10 @@ public class info_server {
     private HashMap<String, Pair<InetSocketAddress,Integer>> client_info;    //注册客户端信息
 
     info_server() throws IOException {
-        client_info=new HashMap<>();
+        client_info=new HashMap<String,Pair<InetSocketAddress,Integer>>();
     }
 
-    public boolean sign_up(String user,InetSocketAddress address, int port){        //注册时
+    private boolean sign_up(String user,InetSocketAddress address, int port){        //注册时
     /*  Iterator<Map.Entry<String, InetSocketAddress>> iterator=client_info.entrySet().iterator();
         while(iterator.hasNext()){
             Map.Entry<String, InetSocketAddress> entry = iterator.next();
@@ -35,11 +37,9 @@ public class info_server {
         }
         return occuad;
 
-
-
     }
 
-    public boolean is_in_info(String user,InetSocketAddress address){       //登录判断该用户名和ip是否以被注册
+    private boolean is_in_info(String user,InetSocketAddress address){       //登录判断该用户名和ip是否以被注册
    /*     Iterator<Map.Entry<String, InetSocketAddress>> iterator=client_info.entrySet().iterator();
         while(iterator.hasNext()){
             Map.Entry<String, InetSocketAddress> entry = iterator.next();
@@ -50,8 +50,13 @@ public class info_server {
             }
         }
         return false;*/
-
-
+        boolean occuad=client_info.containsValue(user);
+        if(!occuad){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
 
@@ -71,9 +76,4 @@ public class info_server {
     }
 
 
-
-
-    public static void main(String[] args)throws IOException,Exception{
-        new info_server().server();
-    }
 }
