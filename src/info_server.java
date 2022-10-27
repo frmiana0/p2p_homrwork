@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.net.*;
 import java.util.HashMap;
 
@@ -61,13 +60,7 @@ public class info_server {
             socket.receive(request);
 
 //            request.
+            Thread.sleep(250);
         }
-    }
-
-
-
-
-    public static void main(String[] args)throws IOException,Exception{
-        new info_server().On_Service();
     }
 }
