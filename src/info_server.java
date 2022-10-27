@@ -41,7 +41,7 @@ public class info_server {
         }
     }
 
-    public Pair<InetAddress, Integer> Find_User_Addr (String target) {
+    public Pair<InetAddress, Integer> Find_User_Address (String target) {
         if (!clients_info.containsKey(target)) {
             return null;
         } else {
@@ -55,11 +55,12 @@ public class info_server {
 
         System.out.println("HostIP:" + IP + '\n' + "Port:" + port);
 
+        final int package_size = 512;
         while(true){
-            DatagramPacket request = new DatagramPacket(new byte[12], 12);
+            DatagramPacket request = new DatagramPacket(new byte[package_size], package_size);
             socket.receive(request);
 
-
+//            request.
         }
     }
 
@@ -67,6 +68,6 @@ public class info_server {
 
 
     public static void main(String[] args)throws IOException,Exception{
-        new info_server().server();
+        new info_server().On_Service();
     }
 }
