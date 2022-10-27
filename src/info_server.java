@@ -1,17 +1,17 @@
-import
 import java.io.IOException;
 import java.net.*;
 import java.util.HashMap;
 
 public class info_server {
+    final InetAddress IP = InetAddress.getByName("localhost");
     final int port = 8000;
-    private HashMap<String, Pair<InetSocketAddress,Integer>> clients_info;    //注册客户端信息
+    private HashMap<String, Pair<InetAddress,Integer>> clients_info;    //注册客户端信息
 
-    info_server() {
+    info_server() throws UnknownHostException {
         clients_info = new HashMap<>();
     }
 
-    public boolean Sign_Up(String user,InetSocketAddress address, int port){        //注册时
+    public boolean Sign_Up(String user,InetAddress address, int port){        //注册时
         String msg;
         boolean occupied;
 
@@ -27,30 +27,38 @@ public class info_server {
         return !occupied;
     }
 
-    public boolean Login_Check(String user, InetSocketAddress address, int port) {
+    public boolean Login_Check(String user, InetAddress address, int port) {
         if (!clients_info.containsKey(user)) {
             return false;
         } else {
             clients_info.forEach((s, inetSocketAddressIntegerPair) -> {
                 if (s.equals(user)) {
-                    inetSocketAddressIntegerPair.s
+                    inetSocketAddressIntegerPair.first = address;
+                    inetSocketAddressIntegerPair.second = port;
                 }
             });
+            return true;
+        }
+    }
+
+    public Pair<InetAddress, Integer> Find_User_Addr (String target) {
+        if (!clients_info.containsKey(target)) {
+            return null;
+        } else {
+            return clients_info.get(target);
         }
     }
 
     public void On_Service()throws Exception{
-        System.out.println("Server Actvated");
-        try {
-            DatagramSocket socket = new DatagramSocket(port);
-        } catch (IOException e) {
-            System.out.println("ERROR::SOCKET_INIT_FAILED");
-            System.exit(1);
-        }
+        System.out.println("Server Activated");
+        DatagramSocket socket = new DatagramSocket(port);
+
+        System.out.println("HostIP:" + IP + '\n' + "Port:" + port);
 
         while(true){
             DatagramPacket request = new DatagramPacket(new byte[12], 12);
             socket.receive(request);
+
 
         }
     }
