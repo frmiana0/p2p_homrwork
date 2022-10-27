@@ -46,6 +46,5 @@ public class client {
     public void client_running() throws IOException{
         System.out.println("客户端以启动。。。");
         DatagramSocket socket=new DatagramSocket(0);
-        DatagramSocket 
     }
 }
